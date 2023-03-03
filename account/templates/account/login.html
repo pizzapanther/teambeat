@@ -1,0 +1,22 @@
+{% extends "teams/base.html" %}{% load tz %}
+{% block title %}Login{% endblock %}
+{% block main %}
+<form method="POST" action="/accounts/login/">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}">
+  <article class="first">
+    <header>
+      <h1 class="no-margin">Login</h1>
+    </header>
+
+    {{ form.as_p }}
+
+    <footer class="flexy">
+      <button type="submit">Login</button>
+      <div class="spacer"></div>
+      <a href="/accounts/signup/" role="button" class="contrast">Sign Up</a>
+      <a href="/accounts/reset/" role="button" class="secondary">Reset Password</a>
+    </footer>
+  </article>
+</form>
+{% endblock %}

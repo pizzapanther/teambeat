@@ -1,0 +1,25 @@
+{% extends "teams/base.html" %}{% load tz %}
+{% block title %}
+{% timezone status.scrum.team.timezone.key %}
+{{ status.scrum.team.name }} Status: {{ status.created|date:"D, M dS, o" }}
+{% endtimezone %}
+{% endblock %}
+{% block main %}
+{% timezone status.scrum.team.timezone.key %}
+<form method="POST" action="{{ request.path }}" autocomplete="off">
+  {% csrf_token %}
+  <article class="first">
+    <header>
+      <h1 class="no-margin">{{ status.scrum.team.name }} Status: {{ status.created|date:"D, M dS, o" }}</h1>
+    </header>
+
+    {{ form.as_p }}
+
+    <footer>
+      <button type="submit" class="auto-width">Save</button>
+    </footer>
+  </article>
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+</form>
+{% endtimezone %}
+{% endblock %}

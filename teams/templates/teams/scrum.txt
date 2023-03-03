@@ -1,0 +1,6 @@
+{% load tz %}{% timezone status.scrum.team.timezone.key %}Fill out today's status at:
+
+{{ status.token_url }}
+
+Status closes at {{ status.scrum.team.next_report|date:"P" }}
+{% endtimezone %}

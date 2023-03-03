@@ -1,0 +1,65 @@
+{% extends "teams/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block extra_head %}
+<style>
+  div.nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  div.nav article {
+    width: 100%;
+    max-width: 360px;
+    min-width: 320px;
+    margin-right: 20px;
+  }
+
+  @media (max-width: 576px) {
+    div.nav article {
+      margin-right: 0;
+    }
+  }
+
+  div.nav article:last-child {
+    margin-right: 0;
+  }
+</style>
+{% endblock %}
+{% block main %}
+<h1 class="no-margin">Dashboard</h1>
+<div class="nav">
+  <article>
+    <header>
+      <h3 class="no-margin">Status Reports</h3>
+    </header>
+    <ul>
+      <li><a href="/status/reports/">View Reports</a></li>
+      <li><a href="/status/open/">Report Status</a></li>
+    </ul>
+  </article>
+  {% if user.is_org_manager %}
+  <article>
+    <header>
+      <h3 class="no-margin">Teams</h3>
+    </header>
+    <ul>
+      <li><a href="/teams/list/">View Teams</a></li>
+      <li><a href="/teams/add/">Add a Team</a></li>
+    </ul>
+  </article>
+  {% endif %}
+  {% if user.is_org_admin %}
+  <article>
+    <header>
+      <h3 class="no-margin">Organization</h3>
+    </header>
+    <ul>
+      <li><a href="/org/edit/">Edit Organization</a></li>
+      <li><a href="/org/members/">View Members</a></li>
+      <li><a href="/org/members/add/">Add a Member</a></li>
+      <li><a href="/payments/">Payments</a></li>
+    </ul>
+  </article>
+  {% endif %}
+</div>
+{% endblock %}

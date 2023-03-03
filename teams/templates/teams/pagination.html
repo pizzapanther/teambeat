@@ -1,0 +1,21 @@
+<div class="pagination">
+  <table style="width: unset; margin: 0 auto;">
+    <tbody>
+      <tr>
+        {% if page.has_previous %}
+        <td>
+          <a href="?page={{ page.previous_page_number }}">&laquo; previous</a>
+        </td>
+        {% endif %}
+        <td>
+          Page {{ page.number }} of {{ page.paginator.num_pages }}
+        </td>
+        {% if page.has_next %}
+        <td>
+          <a href="?page={{ page.next_page_number }}">next &raquo;</a>
+        </td>
+        {% endif %}
+      </tr>
+    </tbody>
+  </table>
+</div>

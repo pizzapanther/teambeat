@@ -1,0 +1,18 @@
+{% extends "teams/base.html" %}{% load tz %}
+{% block title %}Reset Password{% endblock %}
+{% block main %}
+<form method="POST" action="/accounts/reset/">
+  {% csrf_token %}
+  <article class="first">
+    <header>
+      <h1 class="no-margin">Reset Password</h1>
+    </header>
+
+    {{ form.as_p }}
+
+    <footer class="flexy">
+      <button type="submit">Send Reset</button>
+    </footer>
+  </article>
+</form>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'teams/base.html' %}
+{% block title %}Payment Success{% endblock %}
+{% block extra_head %}
+<meta http-equiv="refresh" content="3;url={{ request.path }}?ts={% now 'U' %}">
+{% endblock %}
+{% block main %}
+<h1>Waiting for Payment Confirmation</h1>
+{% endblock %}

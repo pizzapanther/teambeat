@@ -1,0 +1,31 @@
+{% extends "teams/base.html" %}{% load teamtags tz %}
+{% block title %}Open Status Reports{% endblock %}
+{% block main %}
+<h1>Open Status Reports</h1>
+<table role="grid">
+  <thead>
+    <tr>
+      <th scope="col">Team</th>
+      <th scope="col">Completed</th>
+      <th scope="col">Closes At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for team in teams %}
+    {% timezone team.timezone.key %}
+    <tr>
+      <td><a href="/status/save/{{ team|my_status:request.user }}/">{{ team.name }}</a></td>
+      <td>
+        {% if team|completed_by:request.user %}
+        <span class="mdi mdi-check-circle green" aria-label="completed"></span>
+        {% else %}
+        <span class="mdi mdi-minus-circle red" aria-label="incomplete"></span>
+        {% endif %}
+      </td>
+      <td>{{ team.next_report|date:"D, M dS P" }}</td>
+    </tr>
+    {% endtimezone %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

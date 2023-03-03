@@ -1,0 +1,35 @@
+{% extends "teams/base.html" %}{% load teamtags tz %}
+{% block title %}Status Reports{% endblock %}
+{% block main %}
+<h1>Status Reports</h1>
+{% include "teams/pagination.html" %}
+<table role="grid">
+	<thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Team</th>
+      <th scope="col">Completed/Total</th>
+      {% if can_see_ratings %}<th scope="col">Rating min / max / avg</th>{% endif %}
+    </tr>
+  </thead>
+	<tbody>
+		{% for report in page %}
+    {% timezone report.team.timezone.key %}
+    <tr>
+      <td><a href="/status/{{ report.id }}/">{{ report.created|date:"D, M dS, o" }}</a></td>
+      <td>{{ report.team.name }}</td>
+      <td>{{ report.completed }}/{{ report.status_set.all.count }}</td>
+      {% if can_see_ratings %}
+      <td>
+        {% if user|can_view_ratings:report %}
+        {{ report.rating.min|filter_none }} / {{ report.rating.max|filter_none }} / {{ report.rating.avg|filter_none }}
+        {% endif %}
+      </td>
+      {% endif %}
+    </tr>
+    {% endtimezone %}
+    {% endfor %}
+  </tbody>
+</table>
+{% include "teams/pagination.html" %}
+{% endblock %}

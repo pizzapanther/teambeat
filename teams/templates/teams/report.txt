@@ -1,0 +1,13 @@
+{% load tz teamtags %}{% timezone tz.key %}
+# {{ report.team.name }}: {{ report.created|date:"D, M dS, o" }} Report
+---------------------------------------------------------------------------------------------------
+Completed: {{ report.completed }} / Total: {{ report.status_set.all.count }}
+{% if member.view_ratings %}Min: {{ report.rating.min|filter_none }} / Max: {{ report.rating.max|filter_none }} / Avg: {{ report.rating.avg|filter_none }}{% endif %}
+
+See online at: {{ report.url }}
+
+{{ table }}
+
+See online at: {{ report.url }}
+
+{% endtimezone %}

@@ -1,0 +1,13 @@
+{% extends "teams/base.html" %}{% load tz %}
+{% block title %}Status Saved{% endblock %}
+{% block main %}
+{% timezone team.timezone.key %}
+<article class="first">
+    <header>
+      <h1 class="no-margin">Status Saved </h1>
+    </header>
+    <h3>{% now "r" %}</h3>
+</article>
+{% endtimezone %}
+{% endblock %}
+

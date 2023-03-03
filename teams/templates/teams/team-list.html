@@ -1,0 +1,34 @@
+{% extends "teams/base.html" %}{% load teamtags %}
+{% block title %}Teams{% endblock %}
+{% block main %}
+<div class="floatr">
+  <a href="../add/" role="button">Add a Team</a>
+</div>
+<h1>Teams</h1>
+{% include "teams/pagination.html" %}
+<table role="grid">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Members</th>
+      <th scope="col">Sent Time</th>
+      <th scope="col">Time Zone</th>
+      <th scope="col">Open (hr)</th>
+      <th scope="col">Active</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for team in page %}
+    <tr>
+      <td><a href="../edit/{{ team.id }}/">{{ team.name }}</a></td>
+      <td>{{ team.member_count }}</td>
+      <td>{{ team.send_time }}</td>
+      <td>{{ team.timezone }}</td>
+      <td>{{ team.hours_open }}</td>
+      <td>{% if team.active %}&#10004;{% else %}---{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include "teams/pagination.html" %}
+{% endblock %}

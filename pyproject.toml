@@ -1,0 +1,38 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Paul Bailey", email = "paul@neutron.studio"},
+]
+dependencies = [
+    "django>=4.1.2",
+    "django-timezone-field>=5.0",
+    "pytz==2022.2.1",
+    "tzdata==2022.2",
+    "django-dramatiq>=0.11.0",
+    "redis>=4.3.4",
+    "django-easy-logging>=0.4.0",
+    "pyjwt>=2.5.0",
+    "dj-database-url>=1.2.0",
+    "psycopg2-binary>=2.9.5",
+    "gunicorn>=20.1.0",
+    "whitenoise>=6.2.0",
+    "schedule>=1.1.0",
+    "stripe>=5.0.0",
+    "pendulum>=2.1.2",
+    "sentry-sdk>=1.13.0",
+]
+requires-python = ">=3.9"
+license = {text = "None"}
+
+[build-system]
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"
+
+[tool]
+[tool.pdm]
+
+[tool.pdm.scripts]
+_.env_file = ".env"
+req = "pdm export -o requirements.txt --without-hashes --prod"

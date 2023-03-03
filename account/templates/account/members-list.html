@@ -1,0 +1,36 @@
+{% extends "teams/base.html" %}
+{% block title %}{{ org.name }} Members{% endblock %}
+{% block main %}
+<div class="floatr">
+  <a href="./add/" role="button">Add a Member</a>
+</div>
+<h1>{{ org.name }} Members</h1>
+{% include "teams/pagination.html" %}
+<table role="grid">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">E-Mail</th>
+      <th scope="col">Role</th>
+      <th scope="col">Added</th>
+      <th scope="col">Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for member in page %}
+    <tr>
+      <td><a href="/org/members/{{ member.id }}/">{{ member.user.name }}</a></td>
+      <td>{{ member.user.email }}</td>
+      <td>{{ member.get_role_display }}</td>
+      <td>{{ member.created|date:"m/d P T o" }}</td>
+      <td>
+        <a href="./remove/{{ member.id }}/" onclick="return confirm('Are you sure you wish to remove {{ member.user.name }} from your Organization?')">
+          <span class="mdi mdi-delete" aria-label="remove from Organization"></span>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include "teams/pagination.html" %}
+{% endblock %}

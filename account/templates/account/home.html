@@ -1,0 +1,67 @@
+{% extends "teams/base.html" %}{% load static %}
+{% block extra_head %}
+<style>
+  .welcome h1 {
+    margin-bottom: 5px;
+  }
+
+  .welcome img {
+    width: 128px;
+  }
+
+  .welcome h2 {
+    margin: 10px 0;
+    font-size: 1.3rem;
+    font-weight: normal;
+  }
+
+  article {
+    max-width: 400px;
+  }
+
+  header h3 {
+    margin-bottom: 0;
+    font-size: 1.0rem;
+  }
+</style>
+{% endblock %}
+{% block nav-right %}{% endblock %}
+{% block main %}
+<div class="welcome tc">
+  <h1>TeamBeat</h1>
+  <div><img src="{% static 'heartbeat.svg' %}"></div>
+  <h2><em>TeamBeat helps you run and manage remote teams.</em></h2>
+</div>
+<hr>
+<div class="tc">
+  <a href="{{ APP_HOME }}" role="button">Login to Get Started</a>
+  <br><br>
+</div>
+<hr>
+<div class="multicard">
+  <article>
+    <header>
+      <h3>Asynchronous Scrums</h3>
+    </header>
+    <ul>
+      <li><strong>Free 30 Day Trial</strong></li>
+      <li>Get status updates by e-mail</li>
+      <li>Report generated at scrum close</li>
+      <li>Keep a team pulse</li>
+      <li><strong>Flat pricing</strong><br>grow your team not your costs</li>
+    </ul>
+  </article>
+  <article>
+    <header>
+      <h3>Pricing</h3>
+    </header>
+    <ul>
+      <li>$25/month - up to 25 users</li>
+      <li>$40/month - up to 50 users</li>
+      <li>$65/month - up to 100 users</li>
+      <li>$100/month - up to 200 users</li>
+      <li>+200 users - contact us at support@teambeat.app</li>
+    </ul>
+  </article>
+</div>
+{% endblock %}

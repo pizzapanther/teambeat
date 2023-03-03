@@ -1,0 +1,13 @@
+{% extends "teams/base.html" %}
+{% block title %}Subscribe{% endblock %}
+{% block main %}
+<h1>Subscribe</h1>
+<p>Choose a level below to subscribe to.</p>
+<div class="">
+  {% for prod in products %}
+  <a href="{{ prod.url }}" role="button"{% if extra_confirm %} onclick="return confirm('Are you sure you wish to change plans?')"{% endif %}>
+    {{ prod.name }} - ${{ prod.price|floatformat:2 }}/month - Max Users: {{ prod.users }}
+  </a><br><br>
+  {% endfor %}
+</div>
+{% endblock %}

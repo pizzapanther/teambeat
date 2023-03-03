@@ -1,0 +1,57 @@
+{% extends "teams/base.html" %}{% load tz teamtags %}
+{% block title %}
+{% timezone report.team.timezone.key %}
+{{ report.team.name }}: {{ report.created|date:"D, M dS, o" }} Report
+{% endtimezone %}
+{% endblock %}
+{% block main %}
+{% timezone report.team.timezone.key %}
+<h1>{{ report.team.name }}: {{ report.created|date:"D, M dS, o" }} Report</h1>
+<table role="grid" class="vtop">
+  <thead>
+    <tr>
+      <td>
+        <strong>
+          Completed: {{ report.completed }} / Total: {{ report.status_set.all.count }}
+        </strong>
+      </td>
+      {% if viewer.view_ratings %}
+      <td>
+        <strong>
+          Min: {{ report.rating.min|filter_none }} /
+          Max: {{ report.rating.max|filter_none }} /
+          Avg: {{ report.rating.avg|filter_none }}
+        </strong>
+      </td>
+      {% else %}
+      <td></td>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for status in report.ordered_status %}
+    <tr>
+      <td>{{ status.member.name }}</td>
+      <td>
+        <ol>
+          {% for q in status.questions %}
+          {% if q.type == 'rating' %}
+          {% if viewer.view_ratings %}
+          <li><strong>{{ q.text }}: </strong> {{ q.ans }}</li>
+          {% endif %}
+          {% else %}
+          <li>
+            <strong>{{ q.text }}</strong>
+            <br>
+            {{ q.ans }}
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ol>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endtimezone %}
+{% endblock %}

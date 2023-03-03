@@ -1,0 +1,21 @@
+{% extends "teams/base.html" %}
+{% block title %}Edit Account{% endblock %}
+{% block main %}
+<p>
+  <h4><a href="/accounts/password/">&raquo; Change Password</a></h4>
+</p>
+<form method="POST" action="/accounts/edit/" autocomplete="off">
+  {% csrf_token %}
+  <article class="first">
+    <header>
+      <h1 class="no-margin">Edit Account</h1>
+    </header>
+
+    {{ form.as_p }}
+
+    <footer class="flexy">
+      <button type="submit">Save</button>
+    </footer>
+  </article>
+</form>
+{% endblock %}

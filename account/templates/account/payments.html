@@ -1,0 +1,42 @@
+{% extends "teams/base.html" %}
+{% block title %}Payments{% endblock %}
+{% block main %}
+<h1>Payments</h1>
+<table role="grid" class="vtop">
+  <thead>
+    <tr>
+      <td colspan="5">
+        Current Plan: {% if org.credit %}{{ org.credit.get_level_display }}
+        {% if org.credit.level != 'trial' and not org.credit.cancelled %}
+        &nbsp; -&nbsp; <a href="./change/">Change Plans</a>
+        &nbsp; -&nbsp; <a href="./cancel/" onclick="return confirm('Are you sure you wish to cancel?')">Cancel Plan</a>
+        {% else %}
+        &nbsp; -&nbsp; <a href="./subscribe/">Subscribe</a>
+        {% endif %}
+        {% else %}
+        None&nbsp; -&nbsp; <a href="./subscribe/">Subscribe</a>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>Subscription Level</td>
+      <td>Created</td>
+      <td>Expiration</td>
+      <td>Amount</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for credit in page %}
+    <tr>
+      <td>{{ credit.get_level_display }}
+      <td>{{ credit.created|date:"m/d P T o" }}</td>
+      <td>{{ credit.expiration|date:"m/d P T o" }}</td>
+      <td>${{ credit.price|floatformat:2 }}</td>
+      <td>{% if credit.cancelled %}Cancelled{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include "teams/pagination.html" %}
+{% endblock %}

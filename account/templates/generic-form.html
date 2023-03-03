@@ -1,0 +1,22 @@
+{% extends "teams/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block main %}
+<form method="POST" action="{{ request.path }}" autocomplete="off">
+  {% csrf_token %}
+  <article class="first">
+    <header>
+      <h1 class="no-margin">{{ title }}</h1>
+    </header>
+
+    {{ form.as_p }}
+
+    {% if includes %}
+    {% for template in includes %}{% include template %}{% endfor %}
+    {% endif %}
+
+    <footer class="flexy">
+      <button type="submit">{{ action }}</button>
+    </footer>
+  </article>
+</form>
+{% endblock %}

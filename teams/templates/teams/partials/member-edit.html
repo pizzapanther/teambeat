@@ -1,0 +1,38 @@
+<hr>
+{% if action == 'Save' %}
+<div class="floatr">
+  <a href="./add-member/" role="button">Add a Member</a>
+</div>
+<h3 id="membership">Membership</h3>
+<table role="grid">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">E-Mail</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for member in form.instance.members %}
+    <tr>
+      <td>{{ member.name }}</td>
+      <td>{{ member.email }}</td>
+      <td>
+        <label for="view_ratings_{{ member.id }}">
+          <input type="checkbox" id="view_ratings_{{ member.id }}" name="view_ratings_{{ member.id }}"{% if member.view_ratings %} checked{% endif %}>
+          View Ratings
+        </label>
+        <label for="report_status_{{ member.id }}">
+          <input type="checkbox" id="report_status_{{ member.id }}" name="report_status_{{ member.id }}"{% if member.report_status %} checked{% endif %}>
+          Report Status
+        </label>
+        <label for="active_{{ member.id }}">
+          <input type="checkbox" id="active_{{ member.id }}" name="active_{{ member.id }}"{% if member.active %} checked{% endif %}>
+          Active
+        </label>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}

@@ -1,0 +1,53 @@
+<!doctype html>{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <title>{% block title %}Home{% endblock %} | TeamBeat</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'mdi/css/materialdesignicons.min.css' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="{% static 'browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    {% block extra_head %}{% endblock %}
+    {% if not LOCALHOST %}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWHYDZ0TLP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-FWHYDZ0TLP');
+    </script>
+    {% endif %}
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li class="brand">
+          <a href="{{ APP_HOME }}">
+            <img src="{% static 'heartbeat.svg' %}">
+            <strong>TeamBeat</strong>
+          </a>
+        </li>
+      </ul>
+      <ul>
+        {% block nav-right %}
+        <li><a href="/accounts/edit/" class="mdi mdi-account" aria-label="edit account"></a></li>
+        <li><a href="/accounts/logout/" class="mdi mdi-logout" aria-label="logout"></a></li>
+        {% endblock %}
+      </ul>
+    </nav>
+    <main class="container">
+      {% block main %}{% endblock %}
+    </main>
+  </body>
+</html>
