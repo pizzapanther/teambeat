@@ -14,7 +14,6 @@ import os
 from pathlib import Path
 
 import dj_database_url
-import tbeat.products as products
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -200,12 +199,27 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 APP_HOME = "/dashboard/"
 
+try:
+    from products import PRODUCTS_DEV, PRODUCTS_PROD
+
+except:
+    PRODUCTS_DEV = [
+        {
+            'name': 'Level 0',
+            'type': 'level-0',
+            'price': 2500,
+            'api_id': 'price_XXXXXXX',
+            'users': 25,
+        }
+    ]
+    PRODUCTS_PROD = []
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    PRODUCTS = products.PRODUCTS_DEV
+    PRODUCTS = PRODUCTS_DEV
 
 else:
-    PRODUCTS = products.PRODUCTS_PROD
+    PRODUCTS = PRODUCTS_PROD
 
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY', '')
 SENTRY_URL = os.environ.get('SENTRY_URL', None)
