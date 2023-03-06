@@ -27,6 +27,13 @@
 {% endblock %}
 {% block main %}
 <h1 class="no-margin">Dashboard</h1>
+<hr>
+<h2 class="no-margin">Wiki</h2>
+<div class="nav">
+
+</div>
+<hr>
+<h2 class="no-margin">E-Mail Scrums</h2>
 <div class="nav">
   <article>
     <header>
@@ -40,7 +47,7 @@
   {% if user.is_org_manager %}
   <article>
     <header>
-      <h3 class="no-margin">Teams</h3>
+      <h3 class="no-margin">Scrum Teams</h3>
     </header>
     <ul>
       <li><a href="/teams/list/">View Teams</a></li>
@@ -48,7 +55,11 @@
     </ul>
   </article>
   {% endif %}
-  {% if user.is_org_admin %}
+</div>
+{% if user.is_org_admin %}
+<hr>
+<h2 class="no-margin">Organization Settings</h2>
+<div class="nav">
   <article>
     <header>
       <h3 class="no-margin">Organization</h3>
@@ -60,6 +71,6 @@
       <li><a href="/payments/">Payments</a></li>
     </ul>
   </article>
-  {% endif %}
 </div>
+{% endif %}
 {% endblock %}

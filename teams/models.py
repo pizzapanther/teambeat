@@ -68,6 +68,9 @@ class Team(models.Model):
 
   org = models.ForeignKey('account.Organization', on_delete=models.CASCADE, blank=True, null=True)
 
+  class Meta:
+    verbose_name = "scrum team"
+
   def __str__(self):
     return self.name
 
@@ -155,6 +158,9 @@ class Member(models.Model):
 
   created = models.DateTimeField(auto_now_add=True)
   modified = models.DateTimeField(auto_now=True)
+
+  class Meta:
+    verbose_name = "scrum member"
 
   def __str__(self):
     return self.name

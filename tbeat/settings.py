@@ -62,6 +62,7 @@ INSTALLED_APPS = [
 
     'account',
     'teams',
+    'wiki',
 ]
 
 MIDDLEWARE = [
