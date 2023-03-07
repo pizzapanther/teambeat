@@ -18,6 +18,7 @@ from django.urls import path
 
 import account.views
 import teams.views
+import wiki.views
 
 
 urlpatterns = [
@@ -58,6 +59,9 @@ urlpatterns = [
     path('teams/add/', teams.views.edit_team),
     path('teams/edit/<int:team_id>/add-member/', teams.views.team_add_member),
     path('teams/edit/<int:team_id>/', teams.views.edit_team),
+
+    path('wiki/<slug:wiki_slug>/', wiki.views.page_viewer),
+    path('wiki/<slug:wiki_slug>/<path:path>', wiki.views.page_viewer),
 
     path('favicon.ico', account.views.favicon),
     path('', account.views.home),

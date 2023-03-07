@@ -17,6 +17,7 @@ from account.decorators import require_org_admin
 from account.forms import ResetForm, ResetFinishForm, SignUpForm, EditAccountForm, OrgForm, MemberForm
 from account.models import User, PasswordReset, Organization, OrgMember, Credit
 from teams.models import Member
+from wiki.models import Wiki
 
 import pendulum
 import stripe
@@ -150,7 +151,15 @@ def edit_password(request):
 
 @login_required
 def dashboard(request):
-  context = {}
+  if request.user.org:
+    wikis = Wiki.objects.filter(org=request.user.org)
+
+  else:
+    wikis = Wiki.objects.none()
+
+  context = {
+    'wikis': wikis
+  }
   return TemplateResponse(request, 'account/dashboard.html', context)
 
 

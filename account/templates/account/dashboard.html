@@ -30,7 +30,17 @@
 <hr>
 <h2 class="no-margin">Wiki</h2>
 <div class="nav">
-
+  <article>
+    <header>
+      <h3 class="no-margin">Wikis</h3>
+    </header>
+    <ul>
+      <li><a href="/wiki/add/">Add a Wiki</a></li>
+      {% for wiki in wikis %}
+      <li><a href="/wiki/{{ wiki.slug }}/">{{ wiki.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </article>
 </div>
 <hr>
 <h2 class="no-margin">E-Mail Scrums</h2>
