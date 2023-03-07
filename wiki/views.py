@@ -24,7 +24,7 @@ def get_or_wiki_404(request, wiki_slug, path):
     if page:
       return page
 
-    raise Wiki404(wiki, path)
+    raise Wiki404(wiki, fullpath)
 
   raise http.Http404
 

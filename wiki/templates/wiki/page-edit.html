@@ -5,7 +5,7 @@
   {% csrf_token %}
   <article class="first">
     <header>
-      <h1 class="no-margin">{{ status.scrum.team.name }} Status: {{ status.created|date:"D, M dS, o" }}</h1>
+      <h1 class="no-margin">Edit Page{% if path %}: {{ path }}{% endif %}</h1>
     </header>
 
     {{ form.as_p }}
@@ -14,6 +14,5 @@
       <button type="submit" class="auto-width">Save</button>
     </footer>
   </article>
-  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
 </form>
 {% endblock %}
