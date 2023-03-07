@@ -243,5 +243,3 @@ if not DEBUG and SENTRY_URL:
 from dj_easy_log import load_loguru
 
 load_loguru(globals())
-
-# fairly-better-admire-avid
