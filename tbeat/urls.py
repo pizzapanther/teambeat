@@ -60,6 +60,8 @@ urlpatterns = [
     path('teams/edit/<int:team_id>/add-member/', teams.views.team_add_member),
     path('teams/edit/<int:team_id>/', teams.views.edit_team),
 
+    path('wiki/<slug:wiki_slug>/<path:path>/__versions__/', wiki.views.versions_viewer),
+
     path('wiki/<slug:wiki_slug>/', wiki.views.page_viewer),
     path('wiki/<slug:wiki_slug>/<path:path>', wiki.views.page_viewer),
 

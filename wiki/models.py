@@ -1,9 +1,12 @@
 import re
 
+from functools import cached_property
+
 from django.db import models
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 
 class Wiki(models.Model):
@@ -68,13 +71,10 @@ class WikiMember(models.Model):
 
 
 def validate_path(value):
-  if not value.startswith("/"):
-    raise ValidationError("Paths must start with /", code="invalid", params={"value": value})
-
   if value.endswith("/"):
     raise ValidationError("Paths can not end with /", code="invalid", params={"value": value})
 
-  if re.search(r"^[-a-z0-9/]+\Z") is None:
+  if re.search(r"^[-a-z0-9/_]+\Z", value) is None:
     raise ValidationError("Paths can only container lowercase letters, numbers, and dashes", code="invalid", params={"value": value})
 
 
@@ -94,6 +94,22 @@ class Page(models.Model):
   def org(self):
     return self.wiki.org
 
+  @cached_property
+  def current(self):
+    now = timezone.now()
+    version = Version.objects.filter(publish_on__lte=now, page=self, approved_by__isnull=False).first()
+    if version is None:
+      version = Version(title="Not Published", content="# Nothing is Published Yet\n")
+
+    return version
+
+  @property
+  def versions_url(self):
+    return self.path + "/__versions__/"
+
+  def latest_versions(self):
+    return self.version_set.all().order_by('-created')[:10]
+
 
 class Version(models.Model):
   title = models.CharField(max_length=75)
@@ -111,6 +127,9 @@ class Version(models.Model):
   modified = models.DateTimeField(auto_now=True)
   modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.RESTRICT, related_name="+")
 
+  class Meta:
+    ordering = ['-publish_on']
+
   def __str__(self):
     return self.title
 
@@ -125,3 +144,7 @@ class Version(models.Model):
   @property
   def org(self):
     return self.page.wiki.org
+
+  @property
+  def data(self):
+    return {'title': self.title, 'content': self.content}

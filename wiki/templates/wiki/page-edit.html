@@ -1,17 +1,21 @@
 {% extends "teams/base.html" %}{% load tz %}
-{% block title %}Edit Page{% if path %}: {{ path }}{% endif %}{% endblock %}
+{% block title %}Edit Page - {{ wiki.name }}: {{ path }}{% endblock %}
 {% block main %}
 <form method="POST" action="{{ request.path }}" autocomplete="off">
   {% csrf_token %}
   <article class="first">
     <header>
-      <h1 class="no-margin">Edit Page{% if path %}: {{ path }}{% endif %}</h1>
+      <h1 class="no-margin">Edit Page - {{ wiki.name }}: {{ path }}</h1>
     </header>
 
     {{ form.as_p }}
 
-    <footer>
-      <button type="submit" class="auto-width">Save</button>
+    {% if version %}<input type="hidden" name="version" value="{{ version }}">{% endif %}
+
+    <footer class="buttons">
+      <input type="submit" name="action" value="{{ action|title }}" class="auto-width">
+      <div class="spacer"></div>
+      <input type="submit" name="action" value="Publish Now" class="secondary auto-width">
     </footer>
   </article>
 </form>

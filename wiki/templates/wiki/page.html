@@ -1,0 +1,50 @@
+{% extends "teams/base.html" %}{% load static %}
+{% block title %}{{ page.current.title }} | {{ page.wiki.name }}{% endblock %}
+{% block extra_head %}
+<script src="{% static 'wiki/markdown-it.min.js' %}" integrity="sha512-SYfDUYPg5xspsG6OOpXU366G8SZsdHOhqk/icdrYJ2E/WKZxPxze7d2HD3AyXpT7U22PZ5y74xRpqZ6A2bJ+kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="{% static 'wiki/default.min.css' %}">
+<script src="{% static 'wiki/highlight.min.js' %}"></script>
+{% endblock %}
+{% block main %}
+<div class="griddy">
+  <aside>
+    <nav>
+      <ul>
+        <li>narf</li>
+        <li>narf</li>
+        <li>narf</li>
+      </ul>
+    </nav>
+  </aside>
+  <div id="page-content"></div>
+  {{ page.current.data|json_script:"page-data" }}
+  <div>
+    <h6>Versions</h6>
+    <ul>
+      {% for v in page.latest_versions %}
+      <li><a href="?action=edit&version={{ v.id }}">{{ v.created }}</a></li>
+      {% endfor %}
+      <li>
+        <a href="{{ page.versions_url }}">View All &raquo;</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<script>
+  function highlight_func (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return '<pre class="hljs"><code>' +
+               hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+               '</code></pre>';
+      } catch (__) {}
+    }
+
+    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+  }
+
+  var mdraw = JSON.parse(document.getElementById('page-data').textContent);
+  var result = markdownit({html: true, linkify: true, highlight: highlight_func}).render(mdraw.content);
+  document.getElementById('page-content').innerHTML = result;
+</script>
+{% endblock %}

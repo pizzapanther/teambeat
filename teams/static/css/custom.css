@@ -36,7 +36,7 @@ div.inline > div {
 	padding-bottom: 10px;
 }
 
-button.auto-width {
+button.auto-width, input.auto-width {
 	display: inline-block;
 	width: unset;
 }
@@ -120,6 +120,26 @@ form #id_days_of_week > div input[type=checkbox] {
 	margin-right: 2px;
 }
 
+form footer.buttons {
+  display: flex;
+}
+
+form footer.buttons > input, form footer.buttons > a {
+  margin: 0 20px;
+}
+
+form footer.buttons > input:first-child, form footer.buttons > a:first-child {
+  margin-left: 0;
+}
+
+form footer.buttons > input:last-child, form footer.buttons > a:last-child {
+  margin-right: 0;
+}
+
+.spacer {
+  flex: 1;
+}
+
 .multicard {
 	display: flex;
 	flex-wrap: wrap;
@@ -132,4 +152,22 @@ form #id_days_of_week > div input[type=checkbox] {
 	max-width: 400px;
 	min-width: 300px;
 	margin: 0 10px 20px 10px;
+}
+
+.griddy {
+  display: flex;
+}
+
+.griddy aside {
+  width: 200px;
+}
+
+.griddy > div:nth-child(2) {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 40px;
+}
+
+.griddy > div:last-child {
+  width: 200px;
 }
