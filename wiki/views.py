@@ -4,6 +4,7 @@ from django import http
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
+from django.utils import timezone
 
 from wiki.forms import VersionForm
 from wiki.models import Wiki, Page
@@ -35,15 +36,21 @@ def get_or_wiki_404(request, wiki_slug, path):
 
 def page_edit(request, wiki_slug, path):
   action = request.POST['action'].lower()
-  form = VersionForm(request.POST)
+  instance = None
 
-  context = {'form': form, 'action': action}
   try:
     page = get_or_wiki_404(request, wiki_slug, path)
 
   except Wiki404 as e404:
     page = Page(path=e404.path, wiki=e404.wiki)
 
+  else:
+    v = request.POST.get('version')
+    if v:
+      instance = page.version_set.filter(id=v).first()
+
+  form = VersionForm(request.POST, instance=instance)
+  context = {'form': form, 'action': action, 'version': v}
   context['path'] = page.path
   context['wiki'] = page.wiki
 
@@ -57,8 +64,15 @@ def page_edit(request, wiki_slug, path):
 
     version.modified_by = request.user
     version.page = page
+
+    if action == "publish now":
+      version.publish_on = timezone.now()
+      # todo: check approval permissions
+      version.approved_by = request.user
+
     version.save()
-    return TemplateResponse(request, 'wiki/page.html', {'page': page})
+    now = timezone.now()
+    return http.HttpResponseRedirect("?ts={}".format(int(now.timestamp() * 1000)))
 
   else:
     if action == "publish now":
@@ -69,6 +83,8 @@ def page_edit(request, wiki_slug, path):
 
 @login_required
 def page_viewer(request, wiki_slug, path=""):
+  now = timezone.now()
+
   if request.method == 'POST':
     return page_edit(request, wiki_slug, path)
 
@@ -89,6 +105,9 @@ def page_viewer(request, wiki_slug, path=""):
     instance = None
     if version:
       instance = page.version_set.filter(id=version).first()
+      if instance and instance.approved_by and instance.publish_on and instance.publish_on <= now:
+        version = None
+        instance.publish_on = None
 
     form = VersionForm(instance=instance)
     context = {'form': form, 'path': page.path, 'wiki': page.wiki, 'action': action, 'version': version}
