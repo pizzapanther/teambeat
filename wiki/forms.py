@@ -10,4 +10,4 @@ class VersionForm(forms.ModelForm):
 
   class Meta:
     model = Version
-    fields = ['title', 'content', 'publish_on']
+    fields = ['title', 'content', 'show_in_nav', 'publish_on']

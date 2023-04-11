@@ -42,8 +42,8 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Version)
 class VersionAdmin(admin.ModelAdmin):
-  list_display = ('title', 'path', 'wiki', 'org', 'publish_on', 'modified')
-  list_filter = ('modified',)
+  list_display = ('title', 'path', 'wiki', 'org', 'show_in_nav', 'publish_on', 'approved_by', 'modified')
+  list_filter = ('modified', 'show_in_nav', 'page__wiki__org')
   date_hierarchy = 'modified'
   search_fields = ('title', 'page__path', 'page__path__wiki__name')
   raw_id_fields = ('page', 'approved_by', 'created_by', 'modified_by')

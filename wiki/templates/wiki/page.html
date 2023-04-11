@@ -22,7 +22,15 @@
     <h6>Versions</h6>
     <ul>
       {% for v in page.latest_versions %}
-      <li><a href="?action=edit&version={{ v.id }}">{{ v.created }}</a></li>
+      <li>
+        <a href="?action=edit&version={{ v.id }}">
+          {% if v.publish_on and v.approved_by %}
+          Publish: {{ v.publish_on }}
+          {% else %}
+          Created: {{ v.created }}
+          {% endif %}
+        </a>
+      </li>
       {% endfor %}
       <li>
         <a href="{{ page.versions_url }}">View All &raquo;</a>

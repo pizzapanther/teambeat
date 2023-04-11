@@ -118,6 +118,7 @@ class Version(models.Model):
   page = models.ForeignKey(Page, on_delete=models.CASCADE)
 
   publish_on = models.DateTimeField(blank=True, null=True)
+  show_in_nav = models.BooleanField('Show in Navigation', default=False)
 
   approved_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.RESTRICT, blank=True, null=True, related_name="+")
 

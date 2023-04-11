@@ -6,7 +6,7 @@ authors = [
     {name = "Paul Bailey", email = "paul@neutron.studio"},
 ]
 dependencies = [
-    "django>=4.1.2",
+    "django>=4.2",
     "django-timezone-field>=5.0",
     "pytz==2022.2.1",
     "tzdata==2022.2",
